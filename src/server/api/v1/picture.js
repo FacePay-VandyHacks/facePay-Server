@@ -1,21 +1,27 @@
 "use strict";
 
 let Joi             = require('joi'),
-    User            = require('../../models/user');
+    User            = require('../../models/user'),
+    base64Img       = require('base64-img');
 
 
 module.exports = app => {
 
     app.post('/v1/picture', (req, res) => {
       if(req.body){
-        let haha= JSON.stringify(req.body);
-        //haha = haha.substring(0, 1000);
-        console.log(haha);
-
-        console.log("We Hit Picture Post");
-        let base64Data = haha.replace(/^data:image\/png;base64,/, "");
-        require("fs").writeFile("out.txt", haha, function(err) {
+        let imageData= JSON.stringify(req.body);
+        console.log(imageData.substring(0, imageData.length));
+        let base64Data = imageData;
+        require("fs").writeFile("out1.txt", imageData, function(err) {
           console.log(err);
+        });
+        console.log("We Hit Picture Post");
+        base64Img.img(imageData, '/Users/bbroderick/Desktop', 'out3', (err, filepath) => {
+          if(err){
+            console.log(err);
+          }else{
+            console.log(filepath);
+          }
         });
         res.status(200).send({body: req.body})
       }else{

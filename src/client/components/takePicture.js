@@ -20,26 +20,31 @@ class WebCamComp extends Component {
     this.canvas.width = this.video.videoWidth;
     this.canvas.height = this.video.videoHeight;
     this.canvas.getContext('2d').drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
-    let dataUrl = canvas.toDataURL();
-    dataUrl = dataUrl.replace(/^data:image\/(png|jpg);base64,/, "");
+    let dataUrl = canvas.toDataURL("img/png");
+    console.log(dataUrl);
+    //console.log("Here");
+    //dataUrl = dataUrl.replace(/^data:image\/(png|jpg);base64,/, "");
+    setTimeout(() => {
+      $.ajax({
+          url: "/v1/picture",
+          method: "post",
+          data: dataUrl
+      }).then(data => {
+          console.log(data);
+      })
+      .fail(err => {
+          let errorEl = document.getElementById('errorMsg');
+          errorEl.innerHTML = `Error: ${err.responseJSON.error}`;
+      });
+    }, 2000);
 
-    $.ajax({
-        url: "/v1/picture",
-        method: "post",
-        data: dataUrl
-    }).then(data => {
-        console.log(data);
-    })
-    .fail(err => {
-        let errorEl = document.getElementById('errorMsg');
-        errorEl.innerHTML = `Error: ${err.responseJSON.error}`;
-    });
+
   };
 
 
   componentDidMount() {
       this.video = document.querySelector('video');
-      this.canvas = window.canvas = document.querySelector('canvas');
+      this.canvas = window.canvas = document.getElementsByTagName('canvas')[0];
         this.canvas.width = '100%';
         this.canvas.height = 180;
       this.button = document.getElementById('webcam-button');
