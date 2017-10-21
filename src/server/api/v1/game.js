@@ -12,6 +12,10 @@ module.exports = app => {
      *  Supports the start page
      */
     app.post('/v1/game', (req, res) => {
+      console.log(req.body);
+      if(req.body.game === 'klondike'){
+        
+      }
     });
 
     /* Fetch game information

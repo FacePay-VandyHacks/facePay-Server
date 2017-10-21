@@ -1,6 +1,6 @@
 {
   "config": {
-    "mongoURL": "mongodb://localhost:32768/heminggs",
+    "mongoURL": "mongodb://192.168.99.100:32770/broderbm",
     "url": "http://localhost:8080/v1/"
   },
   "users": {

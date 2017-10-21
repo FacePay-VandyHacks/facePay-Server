@@ -1,7 +1,8 @@
 /* Copyright G. Hemingway @2017 - All rights reserved */
 "use strict";
 
-let Joi             = require('joi');
+let Joi             = require('joi'),
+    User            = require('../../models/user');
 
 
 module.exports = app => {
@@ -14,6 +15,25 @@ module.exports = app => {
      * @return { 200, {username, primary_email} }
      */
     app.post('/v1/session', (req, res) => {
+      console.log(req.body.username);
+      User.findOne({username: req.body.username}).then((foundUser) => {
+        if(foundUser){
+          console.log(foundUser);
+          let passwordTest = foundUser.authenticate(req.body.password);
+          console.log(passwordTest);
+          if(foundUser.authenticate(req.body.password)){
+            res.status(200).send({
+              username:       foundUser.username,
+              primary_email:  foundUser.primary_email
+            })
+          }else{
+            res.status(400).send({ error: "Could not recognize password" });
+          }
+        }else{
+          res.status(400).send({ error: "Could not recognize username" });
+        }
+
+      });
     });
 
     /*
@@ -22,6 +42,7 @@ module.exports = app => {
      * @return { 204 if was logged in, 200 if no user in session }
      */
     app.delete('/v1/session', (req, res) => {
+
     });
 
 };
