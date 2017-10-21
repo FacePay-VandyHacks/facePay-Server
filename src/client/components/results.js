@@ -1,4 +1,3 @@
-/* Copyright G. Hemingway, 2017 - All rights reserved */
 'use strict';
 
 import React, { Component }         from 'react';
@@ -27,13 +26,6 @@ class Results extends Component {
     }
 
     componentDidMount() {
-        $.ajax({ url: `/v1/game/${this.props.match.params.id}`})
-            .then(data => {
-                this.setState({ game: data });
-            }).fail(err => {
-                let errorEl = document.getElementById('errorMsg');
-                errorEl.innerHTML = `Error: ${err.responseJSON.error}`;
-            });
     }
 
     render() {

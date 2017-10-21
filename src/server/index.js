@@ -1,4 +1,3 @@
-/* Copyright G. Hemingway, @2017 */
 'use strict';
 
 let path            = require('path'),
@@ -51,7 +50,6 @@ mongoose.connect('mongodb://192.168.99.100:32770/broderbm', options)
         };
 
         // Import our API Routes
-        require('./api/v1/game')(app);
         require('./api/v1/user')(app);
         require('./api/v1/session')(app);
 
@@ -67,5 +65,5 @@ mongoose.connect('mongodb://192.168.99.100:32770/broderbm', options)
 
 // Run the server itself
 let server = app.listen(port, () => {
-    console.log('Assignment 4 app listening on ' + server.address().port);
+    console.log('FacePay app listening on ' + server.address().port);
 });

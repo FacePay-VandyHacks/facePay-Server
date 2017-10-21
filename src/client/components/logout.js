@@ -1,4 +1,3 @@
-/* Copyright G. Hemingway, 2017 - All rights reserved */
 'use strict';
 
 

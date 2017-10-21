@@ -1,4 +1,3 @@
-/* Copyright G. Hemingway, 2017 - All rights reserved */
 'use strict';
 
 
@@ -40,7 +39,7 @@ class Header extends Component {
             </div>;
         return <nav className="navbar navbar-default navbar-static-top">
             <div className="col-xs-8">
-                <h2>Graham's Solitaire</h2>
+                <h2>Face Pay</h2>
             </div>
             {right}
         </nav>

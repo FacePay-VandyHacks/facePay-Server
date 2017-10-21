@@ -1,4 +1,3 @@
-/* Copyright G. Hemingway, 2017 - All rights reserved */
 "use strict";
 
 // Necessary modules
@@ -14,7 +13,6 @@ import Register                 from './components/register';
 import Profile                  from './components/profile';
 import Start                    from './components/start';
 import Results                  from './components/results';
-import Game                     from './components/game';
 
 // Bring app CSS into the picture
 require('./app.css');
@@ -48,7 +46,6 @@ class MyApp extends Component {
                         <Start/> :
                         <Redirect to={'/login'}/>;
                 }}/>
-                <Route path="/game/:id" render={props => <Game user={this.props.user}/>}/>
                 <Route path="/results/:id" render={props => <Results user={this.props.user}/>}/>
             </div>
         </BrowserRouter>;

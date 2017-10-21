@@ -1,4 +1,3 @@
-/* Copyright G. Hemingway, 2017 - All rights reserved */
 'use strict';
 
 
@@ -25,16 +24,6 @@ class Start extends Component {
             draw: document.getElementById('draw').value,
             color: document.getElementById('color').value
         };
-        $.ajax({
-            url: "/v1/game",
-            method: "post",
-            data: data
-        }).then(data => {
-            this.props.history.push(`/game/${data.id}`);
-        }).fail(err => {
-            let errorEl = document.getElementById('errorMsg');
-            errorEl.innerHTML = `Error: ${err.responseJSON.error}`;
-        });
     }
 
     onChange(ev) {

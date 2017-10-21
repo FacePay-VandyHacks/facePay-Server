@@ -1,8 +1,6 @@
-/* Copyright G. Hemingway @2017 - All rights reserved */
 "use strict";
 
 let Joi             = require('joi'),
-    Solitare        = require('../../solitare'),
     User            = require('../../models/user');
 
 

@@ -1,4 +1,3 @@
-/* Copyright G. Hemingway @2017 - All rights reserved */
 "use strict";
 
 let mongoose            = require('mongoose'),
@@ -67,4 +66,3 @@ Game.pre('validate', function(next) {
 /***************** Registration *******************/
 
 module.exports = mongoose.model('Game', Game);
-
