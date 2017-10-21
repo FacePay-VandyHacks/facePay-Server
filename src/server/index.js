@@ -33,14 +33,15 @@ app.use(session({
 }));
 // Finish pipeline setup
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: "50mb"}));
+app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
 
 // Connect to mongoBD
 let options = {
     useMongoClient: true
 };
 
-mongoose.connect('mongodb://192.168.99.100:32770/broderbm', options)
+mongoose.connect('mongodb://192.168.99.100:32771/broderbm', options)
     .then(() => {
         console.log('\t MongoDB connected');
 
@@ -53,6 +54,7 @@ mongoose.connect('mongodb://192.168.99.100:32770/broderbm', options)
         // Import our API Routes
         require('./api/v1/user')(app);
         require('./api/v1/session')(app);
+        require('./api/v1/picture')(app);
 
         // Give them the SPA base page
         app.get('*', (req, res) => {

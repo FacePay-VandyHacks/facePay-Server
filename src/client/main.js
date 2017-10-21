@@ -13,6 +13,8 @@ import Register                 from './components/register';
 import Profile                  from './components/profile';
 import Start                    from './components/start';
 import Results                  from './components/results';
+import ViewPictures             from './components/viewPictures';
+import TakePicture              from './components/takePicture';
 
 // Bring app CSS into the picture
 require('./app.css');
@@ -47,6 +49,8 @@ class MyApp extends Component {
                         <Redirect to={'/login'}/>;
                 }}/>
                 <Route path="/results/:id" render={props => <Results user={this.props.user}/>}/>
+                <Route path="/viewPictures/:id" render={props => <ViewPictures user={this.props.user}/>}/>
+                <Route path="/TakePicture/:id" render={props => <TakePicture user={this.props.user}/>}/>
             </div>
         </BrowserRouter>;
     }

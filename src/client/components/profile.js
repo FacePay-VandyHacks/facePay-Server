@@ -23,6 +23,8 @@ const Game = ({ game, index }) => {
 class Profile extends Component {
     constructor(props) {
         super(props);
+        this.onClickViewPictures = this.onClickViewPictures.bind(this);
+        this.onClickTakePicture = this.onClickTakePicture.bind(this);
         this.state = {
             user: {
                 primary_email: "",
@@ -53,6 +55,16 @@ class Profile extends Component {
         this.fetchUser(nextProps.match.params.username);
     }
 
+    onClickViewPictures() {
+        const { username } = this.props.user.getUser();
+        this.props.history.push(`/viewPictures/${this.state.user.username}`);
+    }
+
+    onClickTakePicture() {
+        const { username } = this.props.user.getUser();
+        this.props.history.push(`/takePicture/${this.state.user.username}`);
+    }
+
     render() {
         // Is the logged in user viewing their own profile
         const isUser = this.props.match.params.username === this.props.user.getUser().username;
@@ -64,50 +76,26 @@ class Profile extends Component {
             <div className="center-block">
                 <p id="errorMsg" className="bg-danger"/>
             </div>
-            <div className="col-xs-2">
-                <h4>Player Profile</h4>
-                { isUser ? <Link to={`/profile/${this.props.match.params.username}/edit`}>Edit Profile</Link> : undefined }
+            <div className="col-xs-offset-4 col-xs-4 profileButtons">
+              <h1>Hello {this.state.user.first_name}</h1>
             </div>
-            <div className="col-xs-8">
-                <div className="row">
-                    <div className="col-xs-1">
-                        <img src={GravHash(this.state.user.primary_email, 100)}/>
-                    </div>
-                    <div className="col-xs-11">
-                        <div className="col-xs-6 text-right">
-                            <p><b>Username:</b></p>
-                            <p><b>First Name:</b></p>
-                            <p><b>Last Name:</b></p>
-                            <p><b>City:</b></p>
-                            <p><b>Email Address:</b></p>
-                        </div>
-                        <div className="col-xs-6">
-                            <p>{this.state.user.username}</p>
-                            <p>{this.state.user.first_name}</p>
-                            <p>{this.state.user.last_name}</p>
-                            <p>{this.state.user.city}</p>
-                            <p>{this.state.user.primary_email}</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-xs-12">
-                        <h4 id="games_count">Games Played ({this.state.user.games.length}):</h4>
-                        { isUser ? <Link to="/start">Start new game</Link> : undefined }
-                    </div>
-                    <table id="gameTable" className="col-xs-12 table">
-                        <thead>
-                        <tr>
-                            <th>Status</th>
-                            <th>Start Date</th>
-                            <th># of moves</th>
-                            <th>Score</th>
-                            <th>Game Type</th>
-                        </tr>
-                        </thead>
-                        <tbody>{games}</tbody>
-                    </table>
-                </div>
+            <div className="col-xs-offset-4 col-xs-4 profileButtons">
+              <button type="button" className="btn btn-primary" onClick={this.onClickViewPictures}>View Pictures</button>
+            </div>
+            <div className="col-xs-offset-4 col-xs-4 profileButtons">
+              <button type="button" className="btn btn-primary">View Accounts</button>
+            </div>
+            <div className="col-xs-offset-4 col-xs-4 profileButtons">
+              <button type="button" className="btn btn-primary" onClick={this.onClickTakePicture}>Add Pictures</button>
+            </div>
+            <div className="col-xs-offset-4 col-xs-4 profileButtons">
+              <button type="button" className="btn btn-primary">Add Accounts</button>
+            </div>
+            <div className="col-xs-offset-4 col-xs-4 profileButtons">
+              <button type="button" className="btn btn-primary">Request Payment</button>
+            </div>
+            <div className="col-xs-offset-4 col-xs-4 profileButtons">
+              <button type="button" className="btn btn-primary">Confirm Payment</button>
             </div>
         </div>;
     }

@@ -31,3 +31,8 @@ table#gameTable tbody tr:hover {
     border-radius: 5px;
     margin: 10px;
 }
+
+.profileButtons{
+  text-align: center;
+  margin-top: 20px;
+}
