@@ -6,6 +6,53 @@ import { withRouter }           from 'react-router';
 
 /*************************************************************************/
 
+class WebCamComp extends Component {
+  constructor(props){
+    super(props);
+    this.video = '';
+    this.canvas = '';
+    this.button = '';
+    this.clickMe = this.clickMe.bind(this);
+  }
+
+  clickMe() {
+    this.canvas.width = this.video.videoWidth;
+    this.canvas.height = this.video.videoHeight;
+    this.canvas.getContext('2d').drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
+  };
+
+
+  componentDidMount() {
+      this.video = document.querySelector('video');
+      this.canvas = window.canvas = document.querySelector('canvas');
+        this.canvas.width = '100%';
+        this.canvas.height = 180;
+      this.button = document.getElementById('webcam-button');
+      let constraints = {
+        audio: false,
+        video: true
+      };
+      navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+          window.stream = stream; // make stream available to browser console
+          this.video.srcObject = stream;
+        }).catch((err) => {
+          console.log('navigator.getUserMedia error: ', err);
+        });
+  }
+
+
+  render(){
+    return(
+      <div id="container" className="col-xs-4 col-xs-offset-3">
+        <video autoPlay></video>
+        <button onClick={this.clickMe} id="webcam-button" className="btn btn-outline-primary">Take snapshot</button>
+        <canvas></canvas>
+      </div>
+    )
+  }
+}
+
+
 
 class Register extends Component {
     constructor(props) {
@@ -114,6 +161,7 @@ class Register extends Component {
                 </form>
             </div>
             <div className="col-xs-2"/>
+            <WebCamComp/>
         </div>
     };
 }

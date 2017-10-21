@@ -1,7 +1,17 @@
 "use strict";
 
 let Joi             = require('joi'),
-    User            = require('../../models/user');
+    User            = require('../../models/user'),
+    AWS             = require('aws-sdk'),
+    fs              = require('file-system');
+
+let Kairos = require('kairos-api');
+let client = new Kairos('54da78a1', '0b1f1e9737f5f34e0d6df1702ccd573c');
+AWS.config.loadFromPath('/Users/bbroderick/Desktop/Web_Apps/facePay/src/server/api/v1/config.json');
+let s3 = new AWS.S3();
+
+//let s3 = new AWS.S3();
+
 
 
 module.exports = (app) => {
@@ -28,6 +38,53 @@ module.exports = (app) => {
             !data.primary_email) {
             res.status(400).send({ error: 'username, password, first_name, last_name, city and primary_email required' });
         } else {
+          let demoImage = encodeURIComponent("/Users/bbroderick/Desktop/Web_Apps/facePay/src/server/api/v1/IMG_9062.JPG.jpeg");
+          let imageData = fs.readFileSync('/Users/bbroderick/Desktop/Web_Apps/facePay/src/server/api/v1/IMG_9062.JPG.jpeg');
+          let params3 = {
+            Bucket: "facepaydemobucket1234567890",
+            Key: demoImage,
+            Body: imageData,
+            ACL: "public-read"
+          }
+          s3.putObject(params3, (err, data) => {
+            if(err){
+              console.log(err);
+            }else{
+              console.log(data);
+            }
+          })
+
+
+          //Kairos Trials
+          let params = {
+            image: 'https://s3.amazonaws.com/facepayvh4/BrendanComps/IMG_9062.JPG.jpeg',
+            subject_id: req.body.username,
+            gallery_name: 'gallerytest1',
+            selector: 'SETPOSE'
+          };
+
+          let params1 = {
+            image: 'http://media.kairos.com/kairos-elizabeth.jpg',
+            gallery_name: 'gallerytest1',
+          };
+
+          client.enroll(params)   // return Promise
+            //  result: {
+            //    status: <http status code>,
+            //    body: <data>
+            //  }
+            .then((result) => {
+              console.log("result");
+            })
+            // err -> array: jsonschema validate errors
+            //        or throw Error
+            .catch(function(err) { console.log("enroll fail") });
+
+            client.recognize(params1).then((result) => {
+              console.log("Recognize:");
+              console.log(result.body.images[0].transaction.subject_id);
+            })
+
           User.create({
             'username':       data.username,
             'password':       data.password,      //password will trigger the virtual password function
