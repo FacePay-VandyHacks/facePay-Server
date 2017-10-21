@@ -7,6 +7,7 @@ import { GravHash }                     from './header';
 
 /*************************************************************************/
 
+
 const Game = ({ game, index }) => {
     let date = new Date(game.start);
     const url = game.active ? `/game/${game.id}` : `/results/${game.id}`;

@@ -6,6 +6,7 @@ let Joi             = require('joi'),
 
 module.exports = app => {
 
+
     /*
      * Log a user in
      *

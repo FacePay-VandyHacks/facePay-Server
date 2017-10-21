@@ -52,6 +52,7 @@ class MyApp extends Component {
     }
 }
 
+
 class User {
     constructor() {
         // See if user is in localStorage

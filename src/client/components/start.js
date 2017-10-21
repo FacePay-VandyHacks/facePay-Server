@@ -32,6 +32,7 @@ class Start extends Component {
         }
     }
 
+
     render() {
         const games = this.state.games.map((game, index) => {
             return <div key={index} className="radio">

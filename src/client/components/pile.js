@@ -6,6 +6,7 @@ import {} from './card.css';
 
 /*************************************************************************/
 
+
 export const Card = ({ card, top, left, onClick }) => {
     const source = card.up ? `/images/${card.value}_of_${card.suit}.png` : "/images/face_down.jpg";
     const style = {left: `${left}%`, top: `${top}%`};

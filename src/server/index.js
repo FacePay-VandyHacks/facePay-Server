@@ -39,6 +39,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 let options = {
     useMongoClient: true
 };
+
 mongoose.connect('mongodb://192.168.99.100:32770/broderbm', options)
     .then(() => {
         console.log('\t MongoDB connected');

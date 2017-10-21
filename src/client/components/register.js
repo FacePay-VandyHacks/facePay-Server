@@ -6,6 +6,7 @@ import { withRouter }           from 'react-router';
 
 /*************************************************************************/
 
+
 class Register extends Component {
     constructor(props) {
         super(props);

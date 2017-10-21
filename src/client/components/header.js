@@ -26,6 +26,7 @@ class Header extends Component {
         this.props.history.push(`/profile/${username}`);
     }
 
+
     render() {
         const user = this.props.user.getUser();
         const right = user.username !== '' ?
