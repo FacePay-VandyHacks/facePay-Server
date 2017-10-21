@@ -10,7 +10,12 @@ module.exports = app => {
     app.post('/v1/picture', (req, res) => {
       if(req.body){
         let imageData= JSON.stringify(req.body);
-        console.log(imageData.substring(0, imageData.length));
+        imageData.replace(" ","+");
+        imageData.replace("{","");
+        imageData.replace("}","");
+        imageData.replace(`\"`,``);
+        imageData.replace(`\t`,``);
+
         let base64Data = imageData;
         require("fs").writeFile("out1.txt", imageData, function(err) {
           console.log(err);
