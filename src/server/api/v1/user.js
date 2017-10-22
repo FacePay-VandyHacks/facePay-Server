@@ -7,8 +7,8 @@ let Joi             = require('joi'),
 
 let Kairos = require('kairos-api');
 let client = new Kairos('54da78a1', '0b1f1e9737f5f34e0d6df1702ccd573c');
-AWS.config.loadFromPath('/Users/bbroderick/Desktop/Web_Apps/facePay/src/server/api/v1/config.json');
-let s3 = new AWS.S3();
+AWS.config.loadFromPath('/Users/alexjreed7/Documents/Hackathon/facePay-Server/src/server/api/v1/config.json');
+let s3 = new AWS.S3();//
 
 //let s3 = new AWS.S3();
 
@@ -38,6 +38,12 @@ module.exports = (app) => {
             !data.primary_email) {
             res.status(400).send({ error: 'username, password, first_name, last_name, city and primary_email required' });
         } else {
+
+
+
+
+
+
           User.create({
             'username':       data.username,
             'password':       data.password,      //password will trigger the virtual password function

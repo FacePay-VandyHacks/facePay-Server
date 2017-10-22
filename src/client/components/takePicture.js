@@ -21,16 +21,21 @@ class WebCamComp extends Component {
     this.canvas.height = this.video.videoHeight;
     this.canvas.getContext('2d').drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
     let dataUrl = canvas.toDataURL("img/png");
-    console.log(dataUrl);
-    //console.log("Here");
+    //console.log(dataUrl);
+  //  dataUrl = JSON.stringify(dataUrl);
+    //console.log("Here\n\n\n\n\n");
     //dataUrl = dataUrl.replace(/^data:image\/(png|jpg);base64,/, "");
+    dataUrl= encodeURIComponent(JSON.stringify(dataUrl));
+    console.log(dataUrl);
+    dataUrl.replace("+","%2B");
     setTimeout(() => {
       $.ajax({
           url: "/v1/picture",
           method: "post",
           data: dataUrl
       }).then(data => {
-          console.log(data);
+          console.log(Object.keys(data)[0]);
+          console.log("hello world");
       })
       .fail(err => {
           let errorEl = document.getElementById('errorMsg');
