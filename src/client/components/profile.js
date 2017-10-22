@@ -25,6 +25,7 @@ class Profile extends Component {
         super(props);
         this.onClickViewPictures = this.onClickViewPictures.bind(this);
         this.onClickTakePicture = this.onClickTakePicture.bind(this);
+        this.onClickRequestPayment = this.onClickRequestPayment.bind(this);
         this.state = {
             user: {
                 primary_email: "",
@@ -65,13 +66,16 @@ class Profile extends Component {
         this.props.history.push(`/takePicture/${this.state.user.username}`);
     }
 
+    onClickRequestPayment() {
+        const { username } = this.props.user.getUser();
+        this.props.history.push(`/requestPayment/${this.state.user.username}`);
+    }
+
     render() {
         // Is the logged in user viewing their own profile
         const isUser = this.props.match.params.username === this.props.user.getUser().username;
         // Build array of games
-        let games = this.state.user.games.map((game, index) => (
-            <Game key={index} game={game} index={index}/>
-        ));
+        console.log(this.state.user.first_name);
         return <div className="row">
             <div className="center-block">
                 <p id="errorMsg" className="bg-danger"/>
@@ -80,22 +84,22 @@ class Profile extends Component {
               <h1>Hello {this.state.user.first_name}</h1>
             </div>
             <div className="col-xs-offset-4 col-xs-4 profileButtons">
-              <button type="button" className="btn btn-primary" onClick={this.onClickViewPictures}>View Pictures</button>
+              <button type="button" className="btn btn-primary my-profile-btn" onClick={this.onClickViewPictures}>View Pictures</button>
             </div>
             <div className="col-xs-offset-4 col-xs-4 profileButtons">
-              <button type="button" className="btn btn-primary">View Accounts</button>
+              <button type="button" className="btn btn-primary my-profile-btn">View Accounts</button>
             </div>
             <div className="col-xs-offset-4 col-xs-4 profileButtons">
-              <button type="button" className="btn btn-primary" onClick={this.onClickTakePicture}>Add Pictures</button>
+              <button type="button" className="btn btn-primary my-profile-btn" onClick={this.onClickTakePicture}>Add Pictures</button>
             </div>
             <div className="col-xs-offset-4 col-xs-4 profileButtons">
-              <button type="button" className="btn btn-primary">Add Accounts</button>
+              <button type="button" className="btn btn-primary my-profile-btn">Add Accounts</button>
             </div>
             <div className="col-xs-offset-4 col-xs-4 profileButtons">
-              <button type="button" className="btn btn-primary">Request Payment</button>
+              <button type="button" className="btn btn-primary my-profile-btn" onClick={this.onClickRequestPayment}>Request Payment</button>
             </div>
             <div className="col-xs-offset-4 col-xs-4 profileButtons">
-              <button type="button" className="btn btn-primary">Confirm Payment</button>
+              <button type="button" className="btn btn-primary my-profile-btn">Confirm Payment</button>
             </div>
         </div>;
     }

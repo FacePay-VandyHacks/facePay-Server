@@ -40,3 +40,11 @@ table#gameTable tbody tr:hover {
 .big-Landing-Logo{
   margin-top: 60px;
 }
+
+.my-profile-btn{
+  width: 100%;
+}
+
+.fill-width-container{
+  width: 100%;
+}

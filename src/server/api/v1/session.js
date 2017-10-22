@@ -1,7 +1,8 @@
 "use strict";
 
 let Joi             = require('joi'),
-    User            = require('../../models/user');
+    User            = require('../../models/user'),
+    request         = require('request');
 
 
 module.exports = app => {
@@ -22,9 +23,23 @@ module.exports = app => {
           let passwordTest = foundUser.authenticate(req.body.password);
           console.log(passwordTest);
           if(foundUser.authenticate(req.body.password)){
-            res.status(200).send({
-              username:       foundUser.username,
-              primary_email:  foundUser.primary_email
+            let accountIDRequest = {
+              url: `http://api.reimaginebanking.com/customers/${foundUser.account_id}/accounts?key=3dc98b7092849aee4831c2d8a79b4b89`,
+              method: 'GET',
+              json: true
+            }
+            request(accountIDRequest, (err, httpResponse, body) => {
+              console.log(body);
+              if(err){
+                console.log(err);
+              }else{
+                res.status(200).send({
+                  username:       foundUser.username,
+                  primary_email:  foundUser.primary_email,
+                  account_id:     foundUser.account_id,
+                  balance:        body[0].balance
+                })
+              }
             })
           }else{
             res.status(400).send({ error: "Could not recognize password" });

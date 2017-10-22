@@ -131,6 +131,8 @@ module.exports = (app) => {
      * @return {200, {username, primary_email, first_name, last_name, city, games[...]}}
      */
     app.get('/v1/user/:username', (req, res) => {
+      console.log("req.params.username")
+      console.log(req.params.username);
       User.findOne({username: req.params.username}).then((foundUser) => {
         if(foundUser){
           console.log(foundUser);

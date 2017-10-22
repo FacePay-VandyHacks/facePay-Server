@@ -15,6 +15,7 @@ import Start                    from './components/start';
 import Results                  from './components/results';
 import ViewPictures             from './components/viewPictures';
 import TakePicture              from './components/takePicture';
+import RequestPayment           from './components/requestPayment';
 
 // Bring app CSS into the picture
 require('./app.css');
@@ -65,9 +66,13 @@ class MyApp extends Component {
                       <Header user={this.props.user}/>
                       <ViewPictures user={this.props.user}/>
                   </div>}/>
-                <Route path="/TakePicture/:id" render={props => <div>
+                <Route path="/takePicture/:id" render={props => <div>
                     <Header user={this.props.user}/>
                     <TakePicture user={this.props.user}/>
+                  </div>}/>
+                <Route path="/requestPayment/:id" render={props => <div>
+                    <Header user={this.props.user}/>
+                    <requestPayment user={this.props.user}/>
                   </div>}/>
             </div>
         </BrowserRouter>;

@@ -41,7 +41,7 @@ let options = {
     useMongoClient: true
 };
 
-mongoose.connect('mongodb://192.168.99.100:32774/broderbm', options)
+mongoose.connect('mongodb://192.168.99.100:32776/broderbm', options)
     .then(() => {
         console.log('\t MongoDB connected');
 
