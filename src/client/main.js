@@ -29,28 +29,46 @@ class MyApp extends Component {
     render() {
         return <BrowserRouter>
             <div>
-                <Header user={this.props.user}/>
                 <Route exact path="/" component={Landing}/>
                 <Route path="/login" render={() => {
                     return this.props.user.loggedIn() ?
                         <Redirect to={`/profile/${this.props.user.username()}`}/> :
-                        <Login user={this.props.user}/>
+                        <div>
+                          <Header user={this.props.user}/>
+                          <Login user={this.props.user}/>
+                        </div>
+
                 }}/>
                 <Route path="/register" render={() => {
                     return this.props.user.loggedIn() ?
                         <Redirect to={`/profile/${this.props.user.username()}`}/> :
-                        <Register/>;
+                        <div>
+                          <Header user={this.props.user}/>
+                          <Register/>;
+                        </div>
                 }}/>
                 <Route path="/logout" render={props => <Logout user={this.props.user}/>}/>
-                <Route path="/profile/:username" render={props => <Profile user={this.props.user}/>}/>
+                <Route path="/profile/:username" render={props => <div>
+                          <Header user={this.props.user}/>
+                          <Profile user={this.props.user}/>
+                      </div>}/>
                 <Route path="/start" render={() => {
                     return this.props.user.loggedIn() ?
                         <Start/> :
                         <Redirect to={'/login'}/>;
                 }}/>
-                <Route path="/results/:id" render={props => <Results user={this.props.user}/>}/>
-                <Route path="/viewPictures/:id" render={props => <ViewPictures user={this.props.user}/>}/>
-                <Route path="/TakePicture/:id" render={props => <TakePicture user={this.props.user}/>}/>
+              <Route path="/results/:id" render={props => <div>
+                      <Header user={this.props.user}/>
+                      <Results user={this.props.user}/>
+                    </div>}/>
+                <Route path="/viewPictures/:id" render={props => <div>
+                      <Header user={this.props.user}/>
+                      <ViewPictures user={this.props.user}/>
+                  </div>}/>
+                <Route path="/TakePicture/:id" render={props => <div>
+                    <Header user={this.props.user}/>
+                    <TakePicture user={this.props.user}/>
+                  </div>}/>
             </div>
         </BrowserRouter>;
     }

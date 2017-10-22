@@ -7,8 +7,10 @@ import React     from 'react';
 
 
 const Landing = () => <div>
-        <div className="row">
-            <h3 className="col-sm-offset-2 col-xs-8">This is my landing page!</h3>
+        <div className="row big-Landing-Logo">
+            <div className="col-xs-8 col-sm-offset-2">
+              <img className="col-xs-12" src="/images/FacePay.png"/>
+            </div>
         </div>
     </div>;
 

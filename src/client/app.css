@@ -36,3 +36,7 @@ table#gameTable tbody tr:hover {
   text-align: center;
   margin-top: 20px;
 }
+
+.big-Landing-Logo{
+  margin-top: 60px;
+}

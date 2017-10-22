@@ -40,7 +40,7 @@ class Header extends Component {
             </div>;
         return <nav className="navbar navbar-default navbar-static-top">
             <div className="col-xs-8">
-                <h2>Face Pay</h2>
+                <img className="col-xs-3" src="/images/FacePay.png"/>
             </div>
             {right}
         </nav>
