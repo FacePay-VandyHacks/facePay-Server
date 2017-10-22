@@ -73,7 +73,7 @@ module.exports = (app) => {
                   "nickname": "string",
                   "rewards": 1000,
                   "balance": 1000,
-                  "account_number": "2343556789123455"
+                  "account_number": "2373956749323455"
                 }
               }
               request(newAccountParams, (err, httpResponse, body) => {

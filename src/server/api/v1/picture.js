@@ -23,17 +23,97 @@ module.exports = app => {
            };
 
            var options = {
-               url: "https://api.kairos.com/enroll",
+               url: "https://api.kairos.com/verify",
                method: 'POST',
                headers: headers,
                form: JSON.stringify({
                    "image":req.body.imageUrl,
                    "gallery_name":"gallery1",
-                   "subject_id": req.body.currentUser
+                   "subject_id": req.body.billing_username
                })
            };
 
+           request(options, (err, httpResponse, body) => {
+             if(err){
+               console.log(err);
+             }else{
+               console.log(JSON.parse(body));
+               let returnData = JSON.parse(body).images[0].transaction;
+               let confidenceScore = returnData.confidence * 100;
+               console.log("Confidence Score");
+               console.log(confidenceScore);
+               if(confidenceScore > 60){
+                 console.log("Payment Amount (line 46)");
+                 console.log(req.body.payment_amount);
+                 let payer = req.body.billing_username;
+                 let payee = req.body.currentUser;
+                 let payerAccountID = "";
+                 let payeeAccountID = "";
+                 let payeeAC1 = '';
+                 let payerAC2 = '';
+                 console.log("Usernames");
+                 console.log(payer);
+                 console.log(payee);
+                 User.findOne({username: payer}).then((foundPayer) => {
+                   payerAccountID= foundPayer.account_id;
+                   console.log("payer Account ID");
+                   console.log(payerAccountID);
+                   User.findOne({username: payee}).then((foundPayee) => {
+                     payeeAccountID = foundPayee.account_id;
+                     console.log("payee Account ID");
+                     console.log(payeeAccountID);
+                     request(`http://api.reimaginebanking.com/customers/${payeeAccountID}/accounts?key=3dc98b7092849aee4831c2d8a79b4b89`, (err, httpResponse, body) => {
+                       if(err){
+                         console.log(err);
+                       }
+                       payeeAC1 = JSON.parse(body)[0]._id;
+                       console.log(body);
+                       console.log("PayeeAC1 (account number)");
+                       console.log(payeeAC1);
+                       request(`http://api.reimaginebanking.com/customers/${payerAccountID}/accounts?key=3dc98b7092849aee4831c2d8a79b4b89`, (err, httpResponse, body2) => {
+                         if(err){
+                           console.log(err);
+                         }
+                         console.log("PayerAC2 (account number)");
+                         payerAC2 = JSON.parse(body2)[0]._id;
+                         console.log(body2);
+                         console.log(payerAC2);
+                         let transferRequestData = {
+                           url: `http://api.reimaginebanking.com/accounts/${payerAC2}/transfers?key=3dc98b7092849aee4831c2d8a79b4b89`,
+                           method: "POST",
+                           json: true,
+                           body: {
+                             "medium": "balance",
+                             "payee_id": payeeAC1, //payeeAC1,
+                             "amount": 100.01,
+                             "transaction_date": "2017-10-22",
+                             "description": "string"
+                           }
+                         }
 
+                         request(transferRequestData, (err, httpResponse, finalBody) => {
+                           if(err){
+                             console.log(err);
+                           }else{
+                             console.log(httpResponse);
+                             console.log("DONE");
+                           }
+                         })
+
+
+                       })
+                     })
+
+
+                   })
+                 })
+               }else{
+                 console.log("AAAAA");
+               }
+               //var confidence_score = body.images.transaction.confidence;
+               //console.log(confidence_score);
+             }
+           })
         }else{
           console.log(req.body.currentUser);
           var headers = {

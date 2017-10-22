@@ -11,6 +11,7 @@ const Landing = () => <div>
             <div className="col-xs-8 col-sm-offset-2">
               <img className="col-xs-12" src="/images/FacePay.png"/>
             </div>
+            <button className="btn btn-default"><a href="/login">Sign In</a></button>
         </div>
     </div>;
 

@@ -24,9 +24,19 @@ class Login extends Component {
             method: "post",
             data: data
         }).then(data => {
+          console.log("second AJAX");
+          $.ajax({
+            url: "/v1/paymentHandle",
+            method: "post",
+            data: {
+              acctId: `59eacfa8a73e4942cdafe3ad`,
+              amount: 15,
+            }
+          })
             this.props.user.logIn(this.props.history, data);
         })
         .fail(err => {
+            console.log("HIT ERROR")
             let errorEl = document.getElementById('errorMsg');
             errorEl.innerHTML = `Error: ${err.responseJSON.error}`;
         });

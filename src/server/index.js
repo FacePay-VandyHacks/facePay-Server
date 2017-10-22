@@ -55,6 +55,7 @@ mongoose.connect('mongodb://192.168.99.100:32776/broderbm', options)
         require('./api/v1/user')(app);
         require('./api/v1/session')(app);
         require('./api/v1/picture')(app);
+        require('./api/v1/paymentHandle')(app);
 
         // Give them the SPA base page
         app.get('*', (req, res) => {
