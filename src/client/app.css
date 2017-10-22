@@ -56,3 +56,13 @@ table#gameTable tbody tr:hover {
 .register-header{
   text-align: center;
 }
+
+.homeLogo{
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+}
+
+.homeLogo:hover{
+  cursor: pointer; cursor: hand;
+}

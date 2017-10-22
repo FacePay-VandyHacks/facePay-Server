@@ -32,7 +32,7 @@ class Header extends Component {
         const right = user.username !== '' ?
             <div className="header">
                 <Link to="/logout">Log Out</Link>
-                <img src={GravHash(user.primary_email, 40)} onClick={this.onClick}/>
+                <img className="homeLogo" src="/images/logo.png" onClick={this.onClick}/>
             </div>:
             <div className="col-xs-4 right-nav">
                 <Link to="/login">Log In</Link>
