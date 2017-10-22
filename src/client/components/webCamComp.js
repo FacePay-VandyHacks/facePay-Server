@@ -34,7 +34,8 @@ export class WebCamComp extends Component {
       uploadData = {
         imageUrl:         dataUrl,
         payment_amount:   amount,
-        billing_username: bill_username
+        billing_username: bill_username,
+        currentUser:      this.currentUser.username
       }
     }else{
       uploadData = {

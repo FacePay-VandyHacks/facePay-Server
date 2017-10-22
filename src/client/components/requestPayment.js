@@ -11,6 +11,7 @@ class RequestPayment extends Component {
   constructor(props){
     super(props);
     this.user = '';
+    this.currentUser = this.props.user.getUser();
   }
 
   componentDidMount(){
@@ -36,7 +37,7 @@ class RequestPayment extends Component {
               </div>
           </div>
         </div>
-        <WebCamComp/>
+        <WebCamComp currentUser={this.currentUser}/>
       </div>
     )
   }
