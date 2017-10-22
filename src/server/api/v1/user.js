@@ -3,11 +3,12 @@
 let Joi             = require('joi'),
     User            = require('../../models/user'),
     AWS             = require('aws-sdk'),
-    fs              = require('file-system');
+    fs              = require('file-system'),
+    request         = require('request');
 
 let Kairos = require('kairos-api');
 let client = new Kairos('54da78a1', '0b1f1e9737f5f34e0d6df1702ccd573c');
-AWS.config.loadFromPath('/Users/alexjreed7/Documents/Hackathon/facePay-Server/src/server/api/v1/config.json');
+AWS.config.loadFromPath('/Users/bbroderick/Desktop/Web_Apps/facePay/src/server/api/v1/config.json');
 let s3 = new AWS.S3();//
 
 //let s3 = new AWS.S3();
@@ -38,28 +39,78 @@ module.exports = (app) => {
             !data.primary_email) {
             res.status(400).send({ error: 'username, password, first_name, last_name, city and primary_email required' });
         } else {
+          let options={
+              url: `http://api.reimaginebanking.com/customers?key=3dc98b7092849aee4831c2d8a79b4b89`,
+              method: 'POST',
+              json: true,
+              body: {
+                "first_name": data.first_name,
+                "last_name": data.last_name,
+                "address": {
+                  "street_number": "string",
+                  "street_name": "string",
+                  "city": data.city,
+                  "state": "tn",
+                  "zip": "80401"
+                }
+              }
+            }
 
-
-
-
-
-
-          User.create({
-            'username':       data.username,
-            'password':       data.password,      //password will trigger the virtual password function
-            'primary_email':  data.primary_email,
-            'first_name':     data.first_name,
-            'last_name':      data.last_name,
-            'city':           data.city,
-            'games':          []
-          }).then((newUser) => {
-            res.status(201).send({
-                username:       newUser.username,
-                primary_email:  newUser.primary_email
-            });
-          }).catch((err) => {
-            console.log(JSON.stringify(err));
-            res.status(400).send({ error: err._message });
+          let newCustomerID = '';
+          request(options, (err, httpResponse, body) => {
+            if(err){
+              console.log(err);
+            }else{
+              newCustomerID = body.objectCreated._id;
+              console.log("My new Customer ID:");
+              console.log(newCustomerID);
+              let newAccountParams = {
+                url: `http://api.reimaginebanking.com/customers/${body.objectCreated._id}/accounts?key=3dc98b7092849aee4831c2d8a79b4b89`,
+                method: 'POST',
+                json: true,
+                body: {
+                  "type": "Credit Card",
+                  "nickname": "string",
+                  "rewards": 1000,
+                  "balance": 1000,
+                  "account_number": "2343556789123455"
+                }
+              }
+              request(newAccountParams, (err, httpResponse, body) => {
+                if(err){
+                  console.log(err)
+                }else{
+                  console.log("MY NEW ACCOUNT:");
+                  console.log(body);
+                  console.log("MY BALANCE:");
+                  console.log(body.objectCreated.balance);
+                  let personalBalance = body.objectCreated.balance;
+                  User.create({
+                    'username':       data.username,
+                    'password':       data.password,      //password will trigger the virtual password function
+                    'primary_email':  data.primary_email,
+                    'account_id':     newCustomerID,
+                    'first_name':     data.first_name,
+                    'last_name':      data.last_name,
+                    'city':           data.city,
+                    'games':          []
+                  }).then((newUser) => {
+                    console.log("MY NEW INFO");
+                    console.log(newUser.username);
+                    console.log(newUser.account_id);
+                    res.status(201).send({
+                        username:       newUser.username,
+                        primary_email:  newUser.primary_email,
+                        account_id:     newUser.account_id,
+                        balance:        personalBalance
+                    });
+                  }).catch((err) => {
+                    console.log(JSON.stringify(err));
+                    res.status(400).send({ error: err._message });
+                  })
+                }
+              })
+            }
           })
         }
     });
@@ -83,14 +134,29 @@ module.exports = (app) => {
       User.findOne({username: req.params.username}).then((foundUser) => {
         if(foundUser){
           console.log(foundUser);
-            res.status(200).send({
-              username:       foundUser.username,
-              primary_email:  foundUser.primary_email,
-              first_name:     foundUser.first_name,
-              last_name:      foundUser.last_name,
-              city:           foundUser.city,
-              games:          foundUser.games
-            })
+
+          let accountIDRequest = {
+            url: `http://api.reimaginebanking.com/customers/${foundUser.account_id}/accounts?key=3dc98b7092849aee4831c2d8a79b4b89`,
+            method: 'GET',
+            json: true
+          }
+          request(accountIDRequest, (err, httpResponse, body) => {
+            if(err){
+              console.log(err);
+            }else{
+              console.log("MY BALANCE");
+              console.log(body[0].balance);
+              res.status(200).send({
+                username:       foundUser.username,
+                primary_email:  foundUser.primary_email,
+                account_id:     foundUser.account_id,
+                first_name:     foundUser.first_name,
+                last_name:      foundUser.last_name,
+                city:           foundUser.city,
+                balance:        body[0].balance
+              })
+            }
+          })
         }else{
           res.status(400).send({ error: "Could not find user" });
         }

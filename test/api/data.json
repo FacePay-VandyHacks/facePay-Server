@@ -1,6 +1,6 @@
 {
   "config": {
-    "mongoURL": "mongodb://192.168.99.100:32768/broderbm",
+    "mongoURL": "mongodb://192.168.99.100:32774/broderbm",
     "url": "http://localhost:8080/v1/"
   },
   "users": {

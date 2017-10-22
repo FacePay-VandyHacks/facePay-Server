@@ -19,6 +19,7 @@ const reservedNames = ['password'];
 let User = new Schema({
     'username':     { type: String, required: true, index: { unique: true } },
     'primary_email':{ type: String, required: true, index: { unique: true } },
+    'account_id':   { type: String, required: true, index: { unique: true } },
     'first_name':   { type: String, default: '' },
     'last_name':    { type: String, default: '' },
     'city':         { type: String, default: '' },

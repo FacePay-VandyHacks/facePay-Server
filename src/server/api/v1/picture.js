@@ -9,29 +9,16 @@ module.exports = app => {
 
     app.post('/v1/picture', (req, res) => {
       if(req.body){
-
         //console.log(req.body);
         //console.log(Object.keys(req.body)[0]);
-
         let imageData= Object.keys(req.body)[0];
         imageData=imageData.substring(1,imageData.length-1);
-
-
-
-        /**
-        imageData.replace(" ","+");
-        imageData.replace("{","");
-        imageData.replace("}","");
-        imageData.replace(`\"`,``);
-        imageData.replace(`\t`,``);
-        */
-
         let base64Data = imageData;
         require("fs").writeFile("out3.txt", imageData, function(err) {
           //console.log(err);
         });
         console.log("We Hit Picture Post");
-        base64Img.img(imageData, '/Users/alexjreed7/Desktop', 'out3', (err, filepath) => {
+        base64Img.img(imageData, '/Users/bbroderick/Desktop', 'out3', (err, filepath) => {
           if(err){
             console.log(err);
           }else{
