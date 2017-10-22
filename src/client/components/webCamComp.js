@@ -10,6 +10,7 @@ import md5                      from 'md5';
 export class WebCamComp extends Component {
   constructor(props){
     super(props);
+    this.currentUser = this.props.currentUser;
     this.video = '';
     this.canvas = '';
     this.button = '';
@@ -25,10 +26,11 @@ export class WebCamComp extends Component {
     console.log(dataUrl);
     //dataUrl.replace("+","%2B");
 
-    let amount = document.getElementById("amount").value
-    let bill_username = document.getElementById("billing_username").value
+
     let uploadData = "";
-    if(amount){
+    if(document.getElementById("amount")){
+      let amount = document.getElementById("amount").value
+      let bill_username = document.getElementById("billing_username").value
       uploadData = {
         imageUrl:         dataUrl,
         payment_amount:   amount,
@@ -36,7 +38,8 @@ export class WebCamComp extends Component {
       }
     }else{
       uploadData = {
-        imageUrl:   dataUrl
+        imageUrl:   dataUrl,
+        currentUser: this.currentUser
       }
     }
     setTimeout(() => {

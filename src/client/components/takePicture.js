@@ -13,6 +13,7 @@ import { WebCamComp }           from './webCamComp';
 class TakePicture extends Component {
   constructor(props){
     super(props);
+    this.currentUser = this.props.user.getUser();
   }
 
   render(){
@@ -23,7 +24,7 @@ class TakePicture extends Component {
         </div>
         <div className="row">
             <div className="col-xs-offset-1 col-xs-8">
-              <WebCamComp/>
+              <WebCamComp currentUser={this.currentUser.username}/>
             </div>
         </div>
       </div>
