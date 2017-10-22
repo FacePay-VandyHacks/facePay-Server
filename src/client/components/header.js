@@ -38,9 +38,9 @@ class Header extends Component {
                 <Link to="/login">Log In</Link>
                 <Link to="/register">Register</Link>
             </div>;
-        return <nav className="navbar navbar-default navbar-static-top">
+        return <nav className="navbar navbar-default navbar-static-top navbar-style">
             <div className="col-xs-8">
-                <img className="col-xs-3" src="/images/FacePay.png"/>
+                <img className="col-xs-4" src="/images/FacePay.png"/>
             </div>
             {right}
         </nav>

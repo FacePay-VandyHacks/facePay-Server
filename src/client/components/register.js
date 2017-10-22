@@ -62,7 +62,13 @@ class Register extends Component {
     }
 
     render() {
-        return <div className="row">
+        return <div>
+        <nav className="navbar navbar-default navbar-static-top navbar-style">
+            <div className="col-xs-12">
+                <img className="col-xs-6 col-xs-offset-3" src="/images/FacePay.png"/>
+            </div>
+        </nav>
+        <div className="row">
             <div className="col-xs-2"/>
             <div className="col-xs-8">
                 <div className="center-block">
@@ -114,6 +120,7 @@ class Register extends Component {
             </div>
             <div className="col-xs-2"/>
         </div>
+      </div>
     };
 }
 

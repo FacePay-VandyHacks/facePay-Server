@@ -48,3 +48,11 @@ table#gameTable tbody tr:hover {
 .fill-width-container{
   width: 100%;
 }
+
+.navbar-style{
+  background-color: white
+}
+
+.register-header{
+  text-align: center;
+}

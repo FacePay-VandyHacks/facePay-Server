@@ -44,7 +44,6 @@ class MyApp extends Component {
                     return this.props.user.loggedIn() ?
                         <Redirect to={`/profile/${this.props.user.username()}`}/> :
                         <div>
-                          <Header user={this.props.user}/>
                           <Register/>;
                         </div>
                 }}/>
