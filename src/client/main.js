@@ -71,7 +71,7 @@ class MyApp extends Component {
                   </div>}/>
                 <Route path="/requestPayment/:id" render={props => <div>
                     <Header user={this.props.user}/>
-                    <requestPayment user={this.props.user}/>
+                    <RequestPayment user={this.props.user}/>
                   </div>}/>
             </div>
         </BrowserRouter>;

@@ -2,23 +2,27 @@
 
 let Joi             = require('joi'),
     User            = require('../../models/user'),
-    base64Img       = require('base64-img');
+    base64Img       = require('base64-img'),
+    request         = require('request');
 
 
 module.exports = app => {
 
     app.post('/v1/picture', (req, res) => {
       if(req.body){
-        //console.log(req.body);
-        //console.log(Object.keys(req.body)[0]);
-        let imageData= Object.keys(req.body)[0];
-        imageData=imageData.substring(1,imageData.length-1);
-        let base64Data = imageData;
-        require("fs").writeFile("out3.txt", imageData, function(err) {
+        if(req.body.payment_amount){
+          console.log(req.body.payment_amount);
+        }else{
+
+        }
+
+
+        let base64Data = req.body.imageUrl;
+        require("fs").writeFile("out3.txt", base64Data, function(err) {
           //console.log(err);
         });
         console.log("We Hit Picture Post");
-        base64Img.img(imageData, '/Users/bbroderick/Desktop', 'out3', (err, filepath) => {
+        base64Img.img(base64Data, '/Users/bbroderick/Desktop', 'out4', (err, filepath) => {
           if(err){
             console.log(err);
           }else{

@@ -21,18 +21,29 @@ export class WebCamComp extends Component {
     this.canvas.height = this.video.videoHeight;
     this.canvas.getContext('2d').drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
     let dataUrl = canvas.toDataURL("img/png");
-    //console.log(dataUrl);
-  //  dataUrl = JSON.stringify(dataUrl);
-    //console.log("Here\n\n\n\n\n");
-    //dataUrl = dataUrl.replace(/^data:image\/(png|jpg);base64,/, "");
-    dataUrl= encodeURIComponent(JSON.stringify(dataUrl));
+    //dataUrl= encodeURIComponent(JSON.stringify(dataUrl));
     console.log(dataUrl);
-    dataUrl.replace("+","%2B");
+    //dataUrl.replace("+","%2B");
+
+    let amount = document.getElementById("amount").value
+    let bill_username = document.getElementById("billing_username").value
+    let uploadData = "";
+    if(amount){
+      uploadData = {
+        imageUrl:         dataUrl,
+        payment_amount:   amount,
+        billing_username: bill_username
+      }
+    }else{
+      uploadData = {
+        imageUrl:   dataUrl
+      }
+    }
     setTimeout(() => {
       $.ajax({
           url: "/v1/picture",
           method: "post",
-          data: dataUrl
+          data: uploadData
       }).then(data => {
           console.log(Object.keys(data)[0]);
           console.log("hello world");
@@ -66,8 +77,8 @@ export class WebCamComp extends Component {
 
   render(){
     return(
-      <div id="container" className="col-xs-4 col-xs-offset-3">
-        <button onClick={this.clickMe} id="webcam-button" className="btn btn-primary">Take snapshot</button>
+      <div id="container" className="col-xs-4 col-xs-offset-1">
+        <button onClick={this.clickMe} id="webcam-button" className="btn btn-primary fill-width-container">Take snapshot</button>
         <video className="fill-width-container" autoPlay></video>
         <canvas className="fill-width-container"></canvas>
       </div>
